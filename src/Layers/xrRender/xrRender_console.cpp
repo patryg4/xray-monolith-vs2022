@@ -266,6 +266,7 @@ Fvector4 heat_vision_blurring = { 15.f, 4.f, 60.f, .0f };
 Fvector4 heat_vision_args_1 = { .0f, .0f, .0f, .0f };
 Fvector4 heat_vision_args_2 = { .0f, .0f, .0f, .0f };
 //--DSR-- HeatVision_end
+
 //crookr
 int scope_fake_enabled = 1;
 //string32 scope_fake_texture = "wpn\\wpn_crosshair_pso1";

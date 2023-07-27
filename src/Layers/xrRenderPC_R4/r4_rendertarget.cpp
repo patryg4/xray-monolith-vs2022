@@ -490,7 +490,6 @@ CRenderTarget::CRenderTarget()
 	s_nightvision.create(b_nightvision, "r2\\nightvision");
 
 	s_fakescope.create(b_fakescope, "r2\\fakescope"); //crookr
-
 	s_heatvision.create(b_heatvision, "r2\\heatvision"); //--DSR-- HeatVision
 	s_lut.create(b_lut, "r2\\lut");	
 	// OCCLUSION
