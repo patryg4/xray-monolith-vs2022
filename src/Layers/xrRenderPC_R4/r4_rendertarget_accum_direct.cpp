@@ -251,6 +251,7 @@ void CRenderTarget::accum_direct(u32 sub_phase)
 		RCache.set_Element(s_accum_direct->E[uiElementIndex]);
 		RCache.set_c("Ldynamic_dir", L_dir.x, L_dir.y, L_dir.z, 0);
 		RCache.set_c("Ldynamic_color", L_clr.x, L_clr.y, L_clr.z, L_spec);
+		RCache.set_c("sun_lumscale", ps_r2_sun_lumscale);
 		RCache.set_c("m_shadow", m_shadow);
 		RCache.set_c("m_sunmask", m_clouds_shadow);
 
@@ -590,6 +591,7 @@ void CRenderTarget::accum_direct_cascade(u32 sub_phase, Fmatrix& xform, Fmatrix&
 		RCache.set_c("m_texgen", m_Texgen);
 		RCache.set_c("Ldynamic_dir", L_dir.x, L_dir.y, L_dir.z, 0);
 		RCache.set_c("Ldynamic_color", L_clr.x, L_clr.y, L_clr.z, L_spec);
+		RCache.set_c("sun_lumscale", ps_r2_sun_lumscale);
 		RCache.set_c("m_shadow", m_shadow);
 		RCache.set_c("m_sunmask", m_clouds_shadow);
 
@@ -1005,6 +1007,7 @@ void CRenderTarget::accum_direct_f(u32 sub_phase)
 		RCache.set_Element(s_accum_direct->E[sub_phase]);
 		RCache.set_c("Ldynamic_dir", L_dir.x, L_dir.y, L_dir.z, 0);
 		RCache.set_c("Ldynamic_color", L_clr.x, L_clr.y, L_clr.z, L_spec);
+		RCache.set_c("sun_lumscale", ps_r2_sun_lumscale);
 		RCache.set_c("m_shadow", m_shadow);
 
 		if (! RImplementation.o.dx10_msaa)
@@ -1159,6 +1162,7 @@ void CRenderTarget::accum_direct_lum()
 	RCache.set_Element(s_accum_direct->E[SE_SUN_LUMINANCE]);
 	RCache.set_c("Ldynamic_dir", L_dir.x, L_dir.y, L_dir.z, 0);
 	RCache.set_c("Ldynamic_color", L_clr.x, L_clr.y, L_clr.z, L_spec);
+	RCache.set_c("sun_lumscale", ps_r2_sun_lumscale);
 
 	if (! RImplementation.o.dx10_msaa)
 	{
@@ -1270,6 +1274,7 @@ void CRenderTarget::accum_direct_volumetric(u32 sub_phase, const u32 Offset, con
 		//		RCache.set_c				("Ldynamic_dir",		L_dir.x,L_dir.y,L_dir.z,0 );
 		RCache.set_c("Ldynamic_color", L_clr.x, L_clr.y, L_clr.z, 0);
 		RCache.set_c("m_shadow", mShadow);
+		RCache.set_c("sun_lumscale", ps_r2_sun_lumscale);
 		Fmatrix m_Texgen;
 		m_Texgen.identity();
 		RCache.xforms.set_W(m_Texgen);

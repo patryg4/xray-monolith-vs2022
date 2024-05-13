@@ -93,15 +93,6 @@ extern ECORE_API Flags32 ps_r2_anomaly_flags;
 extern ECORE_API float ps_r2_df_parallax_h; // r2-only
 extern ECORE_API float ps_r2_df_parallax_range; // r2-only
 extern ECORE_API float ps_r2_gmaterial; // r2-only
-extern ECORE_API float ps_r2_tonemap_middlegray; // r2-only
-extern ECORE_API float ps_r2_tonemap_adaptation; // r2-only
-extern ECORE_API float ps_r2_tonemap_low_lum; // r2-only
-extern ECORE_API float ps_r2_tonemap_amount; // r2-only
-extern ECORE_API float ps_r2_ls_bloom_kernel_scale; // r2-only	// gauss
-extern ECORE_API float ps_r2_ls_bloom_kernel_g; // r2-only	// gauss
-extern ECORE_API float ps_r2_ls_bloom_kernel_b; // r2-only	// bilinear
-extern ECORE_API float ps_r2_ls_bloom_threshold; // r2-only
-extern ECORE_API float ps_r2_ls_bloom_speed; // r2-only
 extern ECORE_API float ps_r2_ls_dsm_kernel; // r2-only
 extern ECORE_API float ps_r2_ls_psm_kernel; // r2-only
 extern ECORE_API float ps_r2_ls_ssm_kernel; // r2-only
@@ -180,44 +171,42 @@ enum
 	R2FLAG_SUN_FOCUS = (1 << 1),
 	R2FLAG_SUN_TSM = (1 << 2),
 	R2FLAG_SUN_DETAILS = (1 << 3),
-	R2FLAG_TONEMAP = (1 << 4),
-	R2FLAG_AA = (1 << 5),
-	R2FLAG_GI = (1 << 6),
-	R2FLAG_FASTBLOOM = (1 << 7),
-	R2FLAG_GLOBALMATERIAL = (1 << 8),
-	R2FLAG_ZFILL = (1 << 9),
-	R2FLAG_R1LIGHTS = (1 << 10),
-	R2FLAG_SUN_IGNORE_PORTALS = (1 << 11),
+	R2FLAG_AA = (1 << 4),
+	R2FLAG_GI = (1 << 5),
+	R2FLAG_GLOBALMATERIAL = (1 << 6),
+	R2FLAG_ZFILL = (1 << 7),
+	R2FLAG_R1LIGHTS = (1 << 8),
+	R2FLAG_SUN_IGNORE_PORTALS = (1 << 9),
 
-	R2FLAG_EXP_SPLIT_SCENE = (1 << 12),
-	R2FLAG_EXP_DONT_TEST_UNSHADOWED = (1 << 13),
-	R2FLAG_EXP_DONT_TEST_SHADOWED = (1 << 14),
+	R2FLAG_EXP_SPLIT_SCENE = (1 << 10),
+	R2FLAG_EXP_DONT_TEST_UNSHADOWED = (1 << 11),
+	R2FLAG_EXP_DONT_TEST_SHADOWED = (1 << 12),
 
-	R2FLAG_USE_NVDBT = (1 << 15),
-	R2FLAG_USE_NVSTENCIL = (1 << 16),
+	R2FLAG_USE_NVDBT = (1 << 13),
+	R2FLAG_USE_NVSTENCIL = (1 << 14),
 
-	R2FLAG_EXP_MT_CALC = (1 << 17),
+	R2FLAG_EXP_MT_CALC = (1 << 15),
 
-	R2FLAG_SOFT_WATER = (1 << 18),
+	R2FLAG_SOFT_WATER = (1 << 16),
 	//	Igor: need restart
-	R2FLAG_SOFT_PARTICLES = (1 << 19),
+	R2FLAG_SOFT_PARTICLES = (1 << 17),
 	//	Igor: need restart
-	R2FLAG_VOLUMETRIC_LIGHTS = (1 << 20),
-	R2FLAG_STEEP_PARALLAX = (1 << 21),
-	R2FLAG_DOF = (1 << 22),
+	R2FLAG_VOLUMETRIC_LIGHTS = (1 << 18),
+	R2FLAG_STEEP_PARALLAX = (1 << 19),
+	R2FLAG_DOF = (1 << 20),
 
-	R1FLAG_DETAIL_TEXTURES = (1 << 23),
+	R1FLAG_DETAIL_TEXTURES = (1 << 21),
 
-	R2FLAG_DETAIL_BUMP = (1 << 24),
+	R2FLAG_DETAIL_BUMP = (1 << 22),
 
-	R3FLAG_DYN_WET_SURF = (1 << 25),
-	R3FLAG_VOLUMETRIC_SMOKE = (1 << 26),
+	R3FLAG_DYN_WET_SURF = (1 << 23),
+	R3FLAG_VOLUMETRIC_SMOKE = (1 << 24),
 
 	//R3FLAG_MSAA					= (1<<28),
-	R3FLAG_MSAA_HYBRID = (1 << 27),
-	R3FLAG_MSAA_OPT = (1 << 28),
-	R2FLAG_TERRAIN_PREPASS = (1 << 29),
-	R3FLAG_USE_DX10_1 = (1 << 30),
+	R3FLAG_MSAA_HYBRID = (1 << 25),
+	R3FLAG_MSAA_OPT = (1 << 26),
+	R2FLAG_TERRAIN_PREPASS = (1 << 27),
+	R3FLAG_USE_DX10_1 = (1 << 28),
 	//R3FLAG_MSAA_ALPHATEST		= (1<<31),
 };
 

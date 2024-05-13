@@ -100,7 +100,7 @@ void CTextureDescrMngr::LoadTHM(LPCSTR initial, map_TD& s_texture_details, map_C
 				xr_delete(desc.m_spec);
 
 			desc.m_spec = xr_new<texture_spec>();
-			desc.m_spec->m_material = tp.material + (tp.material < 4 ? tp.material_weight : 0);
+			desc.m_spec->m_material = tp.material;
 			desc.m_spec->m_use_steep_parallax = false;
 
 			if (tp.bump_mode == STextureParams::tbmUse)

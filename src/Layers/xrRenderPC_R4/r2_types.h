@@ -2,7 +2,6 @@
 
 
 // r3xx code-path (MRT)
-#define		r2_RT_depth			"$user$depth"			      // MRT
 #define		r2_RT_MSAAdepth	"$user$msaadepth"	         // MRT
 #define		r2_RT_P				"$user$position"		      // MRT
 #define		r2_RT_N				"$user$normal"			      // MRT
@@ -10,7 +9,6 @@
 
 // other
 #define		r2_RT_accum			"$user$accum"			// ---	16 bit fp or 16 bit fx
-#define		r2_RT_accum_temp	"$user$accum_temp"		// ---	16 bit fp - only for HW which doesn't feature fp16 blend
 
 #define		r2_T_envs0			"$user$env_s0"			// ---
 #define		r2_T_envs1			"$user$env_s1"			// ---
@@ -32,28 +30,17 @@
 #define		r2_RT_generic2		"$user$generic2"		// ---	//	Igor: for volumetric lights
 #define		r2_RT_generic		"$user$generic"		// ---
 
-#define		r2_RT_bloom1		"$user$bloom1"			// ---
-#define		r2_RT_bloom2		"$user$bloom2"			// ---
-
-#define		r2_RT_luminance_t64	"$user$lum_t64"			// --- temp
-#define		r2_RT_luminance_t8	"$user$lum_t8"			// --- temp
-
-#define		r2_RT_luminance_src	"$user$tonemap_src"		// --- prev-frame-result
-#define		r2_RT_luminance_cur	"$user$tonemap"			// --- result
-#define		r2_RT_luminance_pool "$user$luminance"		// --- pool
-
 #define		r2_RT_smap_surf		"$user$smap_surf"		// --- directional
 #define		r2_RT_smap_depth	"$user$smap_depth"		// ---directional
 #define		r2_RT_smap_depth_minmax	"$user$smap_depth_minmax"
 
-#define		r2_material			"$user$material"		// ---
 #define		r2_ds2_fade			"$user$ds2_fade"		// ---
 
 #define		r2_jitter			"$user$jitter_"			// --- dither
 #define		r2_jitter_mipped	"$user$jitter_mipped"			// --- dither
 #define		r2_sunmask			"sunmask"
 
-#define		r2_RT_secondVP		"$user$viewport2"		// --#SM+#-- +SecondVP+ O?aíeo ea?oeíeó nî âoî?îaî âü?iî?oa
+#define		r2_RT_secondVP		"$user$viewport2"		// --#SM+#-- +SecondVP+ O?aï¿½eo ea?oeï¿½eï¿½ nï¿½ ï¿½oï¿½?ï¿½aï¿½ ï¿½ï¿½?iï¿½?oa
 
 #define		r2_RT_blur_h_2	"$user$blur_h_2"
 #define		r2_RT_blur_2		"$user$blur_2"
@@ -72,6 +59,20 @@
 #define		r2_RT_smaa_edgetex "$user$smaa_edgetex"
 #define		r2_RT_smaa_blendtex "$user$smaa_blendtex"
 
+#define		r2_RT_depth_z_w "$user$depth_z_w"
+#define		r2_RT_depth "$user$depth"
+
+#define		r2_RT_ssr_0 "$user$ssr_0"
+#define		r2_RT_ssr_1 "$user$ssr_1"
+#define		r2_RT_ssr_2 "$user$ssr_2"
+
+#define		r2_RT_bloom_0 "$user$bloom_0"
+#define		r2_RT_bloom_1 "$user$bloom_1"
+#define		r2_RT_bloom_2 "$user$bloom_2"
+#define		r2_RT_bloom_3 "$user$bloom_3"
+#define		r2_RT_bloom_4 "$user$bloom_4"
+
+
 #define		JITTER(a) r2_jitter #a
 
 const float SMAP_near_plane = .1f;
@@ -80,15 +81,8 @@ const u32 SMAP_adapt_min = 768;
 const u32 SMAP_adapt_optimal = 768;
 const u32 SMAP_adapt_max = 1536;
 
-const u32 TEX_material_LdotN = 128; // diffuse,		X, almost linear = small res
-const u32 TEX_material_LdotH = 256; // specular,	Y
-const u32 TEX_material_Count = 4; // Number of materials,	Z
 const u32 TEX_jitter = 64;
 const u32 TEX_jitter_count = 5; // for HBAO
-
-const u32 BLOOM_size_X = 256;
-const u32 BLOOM_size_Y = 256;
-const u32 LUMINANCE_size = 16;
 
 // deffer
 #define		SE_R2_NORMAL_HQ		0	// high quality/detail

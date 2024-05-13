@@ -34,8 +34,6 @@ public:
 	IBlender* b_accum_point;
 	IBlender* b_accum_spot;
 	IBlender* b_accum_reflected;
-	IBlender* b_bloom;
-	IBlender* b_luminance;
 	IBlender* b_combine;
 	IBlender* b_sunshafts;
 	IBlender* b_postprocess_msaa;
@@ -60,6 +58,9 @@ public:
 	IBlender* b_nightvision;
 	IBlender* b_lut;
 	IBlender* b_smaa;
+	IBlender* b_depth;
+	IBlender* b_ibl;
+	IBlender* b_blm;
 	// compute shader for hdao
 	IBlender* b_hdao_cs;
 	IBlender* b_hdao_msaa_cs;
@@ -75,17 +76,16 @@ public:
 #endif
 
 	// MRT-path
-	ref_rt rt_Depth; // Z-buffer like - initial depth
 	ref_rt rt_MSAADepth; // z-buffer for MSAA deferred shading
 	ref_rt rt_Generic_0_r; // MRT generic 0
 	ref_rt rt_Generic_1_r; // MRT generic 1
 	ref_rt rt_Generic;
 	ref_rt rt_Position; // 64bit,	fat	(x,y,z,?)				(eye-space)
+	ref_rt rt_Normal; // 64bit,	fat	(x,y,z,hemi)
 	ref_rt rt_Color; // 64/32bit,fat	(r,g,b,specular-gloss)	(or decompressed MET-8-8-8-8)
 
 	// 
 	ref_rt rt_Accumulator; // 64bit		(r,g,b,specular)
-	ref_rt rt_Accumulator_temp; // only for HW which doesn't feature fp16 blend
 	ref_rt rt_sunshafts_0; // ss0
 	ref_rt rt_sunshafts_1; // ss1
 	ref_rt rt_Generic_0; // 32bit		(r,g,b,a)				// post-process, intermidiate results, etc.
@@ -111,17 +111,22 @@ public:
 
 	ref_rt rt_smaa_edgetex;
 	ref_rt rt_smaa_blendtex;
-	
+
+	ref_rt rt_ibl_0;
+	ref_rt rt_ibl_1;
+	ref_rt rt_ibl_2;
+
+	ref_rt rt_depth_z_w;
+	ref_rt rt_depth;
+
+	ref_rt rt_bloom_0;
+	ref_rt rt_bloom_1;
+	ref_rt rt_bloom_2;
+	ref_rt rt_bloom_3;
+	ref_rt rt_bloom_4;
+
 	//	Igor: for volumetric lights
 	ref_rt rt_Generic_2; // 32bit		(r,g,b,a)				// post-process, intermidiate results, etc.
-	ref_rt rt_Bloom_1; // 32bit, dim/4	(r,g,b,?)
-	ref_rt rt_Bloom_2; // 32bit, dim/4	(r,g,b,?)
-	ref_rt rt_LUM_64; // 64bit, 64x64,	log-average in all components
-	ref_rt rt_LUM_8; // 64bit, 8x8,		log-average in all components
-
-	ref_rt rt_LUM_pool[CHWCaps::MAX_GPUS * 2]; // 1xfp32,1x1,		exp-result -> scaler
-	ref_texture t_LUM_src; // source
-	ref_texture t_LUM_dest; // destination & usage for current frame
 
 	// env
 	ref_texture t_envmap_0; // env-0
@@ -138,8 +143,6 @@ public:
 	ID3DTexture2D* t_ss_async; //32bit		(r,g,b,a) is situated in the system memory
 
 	// Textures
-	ID3DTexture3D* t_material_surf;
-	ref_texture t_material;
 
 	ID3DTexture2D* t_noise_surf [TEX_jitter_count];
 	ref_texture t_noise [TEX_jitter_count];
@@ -176,6 +179,9 @@ private:
 	ref_shader s_gasmask_dudv;
 	ref_shader s_nightvision;	
 	ref_shader s_smaa;
+	ref_shader s_depth;
+	ref_shader s_ibl;
+	ref_shader s_blm;
 
 	ref_shader s_lut;
 	//	generate min/max
@@ -211,19 +217,6 @@ private:
 	ID3DVertexBuffer* g_accum_volumetric_vb;
 	ID3DIndexBuffer* g_accum_volumetric_ib;
 
-	// Bloom
-	ref_geom g_bloom_build;
-	ref_geom g_bloom_filter;
-	ref_shader s_bloom_dbg_1;
-	ref_shader s_bloom_dbg_2;
-	ref_shader s_bloom;
-	ref_shader s_bloom_msaa;
-	float f_bloom_factor;
-
-	// Luminance
-	ref_shader s_luminance;
-	float f_luminance_adapt;
-
 	// Combine
 	ref_geom g_KD;
 	ref_geom g_combine;
@@ -232,15 +225,12 @@ private:
 	ref_geom g_combine_cuboid;
 	ref_geom g_aa_blur;
 	ref_geom g_aa_AA;
-	ref_shader s_combine_dbg_0;
-	ref_shader s_combine_dbg_1;
-	ref_shader s_combine_dbg_Accumulator;
 	ref_shader s_combine;
 	ref_shader s_combine_msaa[8];
 	ref_shader s_combine_volumetric;
+	ref_shader s_postprocess_msaa;
 public:
 	ref_shader s_postprocess;
-	ref_shader s_postprocess_msaa;
 	ref_geom g_postprocess;
 	ref_shader s_menu;
 	ref_geom g_menu;
@@ -302,6 +292,9 @@ public:
 	void phase_nightvision();
 	void phase_lut();		
 	void phase_smaa();
+	void phase_depth();
+	void phase_ibl();
+	void phase_bloom();
 	void phase_scene_prepare();
 	void phase_scene_begin();
 	void phase_scene_end();
@@ -347,8 +340,6 @@ public:
 	void accum_reflected(light* L);
 	//	Igor: for volumetric lights
 	void accum_volumetric(light* L);
-	void phase_bloom();
-	void phase_luminance();
 	void phase_combine();
 	void phase_combine_volumetric();
 	void phase_pp();

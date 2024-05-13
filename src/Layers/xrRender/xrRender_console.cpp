@@ -110,9 +110,9 @@ xr_token screenshot_mode_token [ ] = {
 	{ 0, 0 }
 };
 
-//	“Off”
-//	“DX10.0 style [Standard]”
-//	“DX10.1 style [Higher quality]”
+//	пїЅOffпїЅ
+//	пїЅDX10.0 style [Standard]пїЅ
+//	пїЅDX10.1 style [Higher quality]пїЅ
 
 // Common
 extern int psSkeletonUpdate;
@@ -185,7 +185,6 @@ Flags32 ps_r2_ls_flags = {
 	| R2FLAG_STEEP_PARALLAX
 	| R2FLAG_SUN_FOCUS
 	| R2FLAG_SUN_TSM
-	| R2FLAG_TONEMAP
 	| R2FLAG_VOLUMETRIC_LIGHTS
 }; // r2-only
 
@@ -203,18 +202,9 @@ Flags32 ps_r2_anomaly_flags = {
 
 float ps_r2_df_parallax_h = 0.02f;
 float ps_r2_df_parallax_range = 75.f;
-float ps_r2_tonemap_middlegray = 1.f; // r2-only
-float ps_r2_tonemap_adaptation = 1.f; // r2-only
-float ps_r2_tonemap_low_lum = .4f; // r2-only
-float ps_r2_tonemap_amount = 0.7f; // r2-only
-float ps_r2_ls_bloom_kernel_g = 3.f; // r2-only
-float ps_r2_ls_bloom_kernel_b = .7f; // r2-only
-float ps_r2_ls_bloom_speed = 100.f; // r2-only
-float ps_r2_ls_bloom_kernel_scale = .7f; // r2-only	// gauss
 float ps_r2_ls_dsm_kernel = .7f; // r2-only
 float ps_r2_ls_psm_kernel = .7f; // r2-only
 float ps_r2_ls_ssm_kernel = .7f; // r2-only
-float ps_r2_ls_bloom_threshold = 1.f; // r2-only
 Fvector ps_r2_aa_barier = {.8f, .1f, 0}; // r2-only
 Fvector ps_r2_aa_weight = {.25f, .25f, 0}; // r2-only
 float ps_r2_aa_kernel = .5f; // r2-only
@@ -307,7 +297,7 @@ Flags32 ps_actor_shadow_flags = {0}; //Swartz: actor shadow
 Flags32 ps_common_flags = {0}; // r1-only
 u32 ps_steep_parallax = 0;
 int ps_r__detail_radius = 49;
-#ifdef DETAIL_RADIUS // управление радиусом отрисовки травы
+#ifdef DETAIL_RADIUS // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 u32 dm_size = 24;
 u32 dm_cache1_line = 12; //dm_size*2/dm_cache1_count
 u32 dm_cache_line = 49; //dm_size+1+dm_size
@@ -948,17 +938,6 @@ void xrRender_initconsole()
 
 	// R2-specific
 	CMD2(CCC_R2GM, "r2em", &ps_r2_gmaterial);
-	CMD3(CCC_Mask, "r2_tonemap", &ps_r2_ls_flags, R2FLAG_TONEMAP);
-	CMD4(CCC_Float, "r2_tonemap_middlegray", &ps_r2_tonemap_middlegray, 0.0f, 2.0f);
-	CMD4(CCC_Float, "r2_tonemap_adaptation", &ps_r2_tonemap_adaptation, 0.01f, 10.0f);
-	CMD4(CCC_Float, "r2_tonemap_lowlum", &ps_r2_tonemap_low_lum, 0.0001f, 1.0f);
-	CMD4(CCC_Float, "r2_tonemap_amount", &ps_r2_tonemap_amount, 0.0000f, 1.0f);
-	CMD4(CCC_Float, "r2_ls_bloom_kernel_scale", &ps_r2_ls_bloom_kernel_scale, 0.05f, 2.f);
-	CMD4(CCC_Float, "r2_ls_bloom_kernel_g", &ps_r2_ls_bloom_kernel_g, 1.f, 7.f);
-	CMD4(CCC_Float, "r2_ls_bloom_kernel_b", &ps_r2_ls_bloom_kernel_b, 0.01f, 1.f);
-	CMD4(CCC_Float, "r2_ls_bloom_threshold", &ps_r2_ls_bloom_threshold, 0.f, 1.f);
-	CMD4(CCC_Float, "r2_ls_bloom_speed", &ps_r2_ls_bloom_speed, 0.f, 100.f);
-	CMD3(CCC_Mask, "r2_ls_bloom_fast", &ps_r2_ls_flags, R2FLAG_FASTBLOOM);
 	CMD4(CCC_Float, "r2_ls_dsm_kernel", &ps_r2_ls_dsm_kernel, .1f, 3.f);
 	CMD4(CCC_Float, "r2_ls_psm_kernel", &ps_r2_ls_psm_kernel, .1f, 3.f);
 	CMD4(CCC_Float, "r2_ls_ssm_kernel", &ps_r2_ls_ssm_kernel, .1f, 3.f);

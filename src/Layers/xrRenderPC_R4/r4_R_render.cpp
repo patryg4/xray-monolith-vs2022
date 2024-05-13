@@ -435,6 +435,10 @@ void CRender::Render()
 		Target->phase_scene_end();
 	}
 
+	ID3D11Resource* zbuffer_res;
+    HW.pBaseZB->GetResource(&zbuffer_res);
+    HW.pContext->CopyResource(Target->rt_test->pSurface, zbuffer_res);
+
 	if (g_hud && g_hud->RenderActiveItemUIQuery())
 	{
 		Target->phase_wallmarks();
@@ -449,6 +453,8 @@ void CRender::Render()
 
 		Wallmarks->Render(); // wallmarks has priority as normal geometry
 	}
+
+	Target->phase_depth();
 
 	// Update incremental shadowmap-visibility solver
 	{

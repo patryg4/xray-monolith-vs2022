@@ -298,7 +298,7 @@ class cl_sun0_color : public R_constant_setup
 		{
 			CEnvDescriptor& desc = *g_pGamePersistent->Environment().CurrentEnv;
 			#if RENDER==R_R1 //Lumscale control for R1
-				result.set(desc.sun_color.x * ps_r2_sun_lumscale, desc.sun_color.y * ps_r2_sun_lumscale, desc.sun_color.z * ps_r2_sun_lumscale, 0);
+				result.set(desc.sun_color.x, desc.sun_color.y, desc.sun_color.z, 0);
 			#else
 				result.set(desc.sun_color.x, desc.sun_color.y, desc.sun_color.z, 0);
 			#endif

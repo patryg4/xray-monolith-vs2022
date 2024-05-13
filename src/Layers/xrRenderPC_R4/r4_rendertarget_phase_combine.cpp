@@ -46,18 +46,6 @@ void CRenderTarget::phase_combine()
 	u32 Offset = 0;
 	Fvector2 p0, p1;
 
-	//*** exposure-pipeline
-	u32			gpu_id	= Device.dwFrame%HW.Caps.iGPUNum;
-	if (Device.m_SecondViewport.IsSVPActive()) //--#SM+#-- +SecondVP+
-	{
-		// clang-format off
-		gpu_id = (Device.dwFrame - 1) % HW.Caps.iGPUNum;
-	}
-	{
-		t_LUM_src->surface_set		(rt_LUM_pool[gpu_id*2+0]->pSurface);
-		t_LUM_dest->surface_set		(rt_LUM_pool[gpu_id*2+1]->pSurface);
-	}
-
 	if (RImplementation.o.ssao_hdao && RImplementation.o.ssao_ultra)
 	{
 		if (ps_r_ssao > 0)
@@ -315,13 +303,13 @@ void CRenderTarget::phase_combine()
 	{
 		// we need to resolve rt_Generic_1 into rt_Generic_1_r
 		HW.pContext->ResolveSubresource(rt_Generic_1->pTexture->surface_get(), 0,
-		                                rt_Generic_1_r->pTexture->surface_get(), 0, DXGI_FORMAT_R8G8B8A8_UNORM);
+		                                rt_Generic_1_r->pTexture->surface_get(), 0, DXGI_FORMAT_R16G16B16A16_FLOAT);
 		HW.pContext->ResolveSubresource(rt_Generic_0->pTexture->surface_get(), 0,
-		                                rt_Generic_0_r->pTexture->surface_get(), 0, DXGI_FORMAT_R8G8B8A8_UNORM);
+		                                rt_Generic_0_r->pTexture->surface_get(), 0, DXGI_FORMAT_R16G16B16A16_FLOAT);
 	}
 
-	// for msaa we need a resolved color buffer - Holger
-	phase_bloom(); // HDR RT invalidated here
+	phase_ibl();
+	phase_bloom();
 
 	//RImplementation.rmNormal();
 	//u_setrt(rt_Generic_1,0,0,HW.pBaseZB);
@@ -545,16 +533,6 @@ void CRenderTarget::phase_combine()
 	{
 		PIX_EVENT(phase_pp);
 		phase_pp();
-	}
-
-	//	Re-adapt luminance
-	RCache.set_Stencil(FALSE);
-
-	//*** exposure-pipeline-clear
-	{
-		std::swap(rt_LUM_pool[gpu_id * 2 + 0], rt_LUM_pool[gpu_id * 2 + 1]);
-		t_LUM_src->surface_set(NULL);
-		t_LUM_dest->surface_set(NULL);
 	}
 
 #ifdef DEBUG

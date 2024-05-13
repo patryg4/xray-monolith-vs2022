@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-void CRenderTarget::phase_bloom()
+void CRenderTarget::phase_ibl()
 {
 	//Get common data
 	u32 Offset = 0;
@@ -10,8 +10,8 @@ void CRenderTarget::phase_bloom()
 	FLOAT ColorRGBA[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 
 	//Full resolution
-	float w = float(Device.dwWidth) * 0.5;
-	float h = float(Device.dwHeight) * 0.5;	
+	float w = float(Device.dwWidth);
+	float h = float(Device.dwHeight);	
 
 	Fvector2 p0, p1;
 	p0.set(0.0f, 0.0f);
@@ -30,10 +30,10 @@ void CRenderTarget::phase_bloom()
 	}
 
 /////////////////////////////////////////////////////////////////////////////////
-	u_setrt(rt_bloom_0, 0, 0, HW.pBaseZB);
+	u_setrt(rt_ibl_0, 0, 0, HW.pBaseZB);
 	RCache.set_CullMode(CULL_NONE);
 	RCache.set_Stencil(FALSE);
-	HW.pContext->ClearRenderTargetView(rt_bloom_0->pRT, ColorRGBA);
+	HW.pContext->ClearRenderTargetView(rt_ibl_0->pRT, ColorRGBA);
 
 	// Fill vertex buffer
 	FVF::TL* pv = (FVF::TL*)RCache.Vertex.Lock(4, g_combine->vb_stride, Offset);
@@ -44,20 +44,17 @@ void CRenderTarget::phase_bloom()
 	RCache.Vertex.Unlock(4, g_combine->vb_stride);
 
 	// Draw COLOR
-	RCache.set_Element(s_blm->E[0]);
+	RCache.set_Element(s_ibl->E[0]);
 	RCache.set_c("m_current", m_current); 
 	RCache.set_c("m_previous", m_previous);	
 	RCache.set_Geometry(g_combine);
 	RCache.Render(D3DPT_TRIANGLELIST, Offset, 0, 4, 0, 2);
 
-    w *= 0.5;
-	h *= 0.5;
-
 /////////////////////////////////////////////////////////////////////////////////
-	u_setrt(rt_bloom_1, 0, 0, HW.pBaseZB);
+	u_setrt(rt_ibl_1, 0, 0, HW.pBaseZB);
 	RCache.set_CullMode(CULL_NONE);
 	RCache.set_Stencil(FALSE);
-	HW.pContext->ClearRenderTargetView(rt_bloom_1->pRT, ColorRGBA);
+	HW.pContext->ClearRenderTargetView(rt_ibl_1->pRT, ColorRGBA);
 
 	// Fill vertex buffer
 	pv = (FVF::TL*)RCache.Vertex.Lock(4, g_combine->vb_stride, Offset);
@@ -68,20 +65,17 @@ void CRenderTarget::phase_bloom()
 	RCache.Vertex.Unlock(4, g_combine->vb_stride);
 
 	// Draw COLOR
-	RCache.set_Element(s_blm->E[1]);
+	RCache.set_Element(s_ibl->E[1]);
 	RCache.set_c("m_current", m_current); 
 	RCache.set_c("m_previous", m_previous);	
 	RCache.set_Geometry(g_combine);
 	RCache.Render(D3DPT_TRIANGLELIST, Offset, 0, 4, 0, 2);
 
-    w = float(Device.dwWidth);
-	h = float(Device.dwHeight);	
-
 /////////////////////////////////////////////////////////////////////////////////
-	u_setrt(rt_bloom_2, 0, 0, HW.pBaseZB);
+	u_setrt(rt_ibl_2, 0, 0, HW.pBaseZB);
 	RCache.set_CullMode(CULL_NONE);
 	RCache.set_Stencil(FALSE);
-	HW.pContext->ClearRenderTargetView(rt_bloom_2->pRT, ColorRGBA);
+	HW.pContext->ClearRenderTargetView(rt_ibl_2->pRT, ColorRGBA);
 
 	// Fill vertex buffer
 	pv = (FVF::TL*)RCache.Vertex.Lock(4, g_combine->vb_stride, Offset);
@@ -92,51 +86,9 @@ void CRenderTarget::phase_bloom()
 	RCache.Vertex.Unlock(4, g_combine->vb_stride);
 
 	// Draw COLOR
-	RCache.set_Element(s_blm->E[2]);
-	RCache.set_c("m_current", m_current); 
-	RCache.set_c("m_previous", m_previous);	
-	RCache.set_Geometry(g_combine);
-	RCache.Render(D3DPT_TRIANGLELIST, Offset, 0, 4, 0, 2);    
-
-/////////////////////////////////////////////////////////////////////////////////
-	u_setrt(rt_bloom_3, 0, 0, HW.pBaseZB);
-	RCache.set_CullMode(CULL_NONE);
-	RCache.set_Stencil(FALSE);
-	HW.pContext->ClearRenderTargetView(rt_bloom_3->pRT, ColorRGBA);
-
-	// Fill vertex buffer
-	pv = (FVF::TL*)RCache.Vertex.Lock(4, g_combine->vb_stride, Offset);
-	pv->set(0, float(h), d_Z, d_W, C, p0.x, p1.y); pv++;
-	pv->set(0, 0, d_Z, d_W, C, p0.x, p0.y); pv++;
-	pv->set(float(w), float(h), d_Z, d_W, C, p1.x, p1.y); pv++;
-	pv->set(float(w), 0, d_Z, d_W, C, p1.x, p0.y); pv++;
-	RCache.Vertex.Unlock(4, g_combine->vb_stride);
-
-	// Draw COLOR
-	RCache.set_Element(s_blm->E[3]);
+	RCache.set_Element(s_ibl->E[2]);
 	RCache.set_c("m_current", m_current); 
 	RCache.set_c("m_previous", m_previous);	
 	RCache.set_Geometry(g_combine);
 	RCache.Render(D3DPT_TRIANGLELIST, Offset, 0, 4, 0, 2);        
-
-/////////////////////////////////////////////////////////////////////////////////
-	u_setrt(rt_bloom_4, 0, 0, HW.pBaseZB);
-	RCache.set_CullMode(CULL_NONE);
-	RCache.set_Stencil(FALSE);
-	HW.pContext->ClearRenderTargetView(rt_bloom_4->pRT, ColorRGBA);
-
-	// Fill vertex buffer
-	pv = (FVF::TL*)RCache.Vertex.Lock(4, g_combine->vb_stride, Offset);
-	pv->set(0, float(h), d_Z, d_W, C, p0.x, p1.y); pv++;
-	pv->set(0, 0, d_Z, d_W, C, p0.x, p0.y); pv++;
-	pv->set(float(w), float(h), d_Z, d_W, C, p1.x, p1.y); pv++;
-	pv->set(float(w), 0, d_Z, d_W, C, p1.x, p0.y); pv++;
-	RCache.Vertex.Unlock(4, g_combine->vb_stride);
-
-	// Draw COLOR
-	RCache.set_Element(s_blm->E[4]);
-	RCache.set_c("m_current", m_current); 
-	RCache.set_c("m_previous", m_previous);	
-	RCache.set_Geometry(g_combine);
-	RCache.Render(D3DPT_TRIANGLELIST, Offset, 0, 4, 0, 2);         
 };

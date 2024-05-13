@@ -18,6 +18,7 @@ void CBlender_sunshafts::Compile(CBlender_Compile& C)
 	case 0: // generation of sunshafts mask
 		C.r_Pass("ssss_notransform", "ogse_sunshafts_mask", FALSE, FALSE, FALSE);
 		C.r_dx10Texture("s_position", r2_RT_P);
+		C.r_dx10Texture("s_normal", r2_RT_N);
 		C.r_dx10Texture("s_image", r2_RT_generic0);
 
 	
@@ -54,6 +55,7 @@ void CBlender_sunshafts::Compile(CBlender_Compile& C)
 	case 4: // combine pass
 		C.r_Pass("ssss_notransform", "ogse_sunshafts_final", FALSE, FALSE, FALSE);
 		C.r_dx10Texture("s_position", r2_RT_P);
+		C.r_dx10Texture("s_normal", r2_RT_N);
 		C.r_dx10Texture("s_sun_shafts", r2_RT_sunshafts1);
 		C.r_dx10Texture("s_image", r2_RT_generic0);
 

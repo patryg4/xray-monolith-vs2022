@@ -270,9 +270,6 @@
     <ClInclude Include="..\xrRender\WallmarksEngine.h">
       <Filter>Wallmarks</Filter>
     </ClInclude>
-    <ClInclude Include="blender_bloom_build.h">
-      <Filter>Shading templates</Filter>
-    </ClInclude>
     <ClInclude Include="..\xrRender\Blender_BmmD.h">
       <Filter>Shading templates</Filter>
     </ClInclude>
@@ -312,15 +309,21 @@
     <ClInclude Include="blender_light_spot.h">
       <Filter>Shading templates</Filter>
     </ClInclude>
-    <ClInclude Include="blender_luminance.h">
-      <Filter>Shading templates</Filter>
-    </ClInclude>
     <ClInclude Include="..\xrRender\Blender_Particle.h">
       <Filter>Shading templates</Filter>
     </ClInclude>
     <ClInclude Include="blender_ssao.h">
       <Filter>Shading templates</Filter>
     </ClInclude>
+    <ClInclude Include="blender_depth.h">
+      <Filter>Shading templates</Filter>
+    </ClInclude> 
+    <ClInclude Include="blender_ibl.h">
+      <Filter>Shading templates</Filter>
+    </ClInclude>                   
+    <ClInclude Include="blender_bloom.h">
+      <Filter>Shading templates</Filter>
+    </ClInclude>    
     <ClInclude Include="dx11HDAOCSBlender.h">
       <Filter>Shading templates</Filter>
     </ClInclude>
@@ -911,9 +914,6 @@
     <ClCompile Include="..\xrRender\WallmarksEngine.cpp">
       <Filter>Wallmarks</Filter>
     </ClCompile>
-    <ClCompile Include="blender_bloom_build.cpp">
-      <Filter>Shading templates</Filter>
-    </ClCompile>
     <ClCompile Include="..\xrRender\Blender_BmmD.cpp">
       <Filter>Shading templates</Filter>
     </ClCompile>
@@ -953,15 +953,21 @@
     <ClCompile Include="blender_light_spot.cpp">
       <Filter>Shading templates</Filter>
     </ClCompile>
-    <ClCompile Include="blender_luminance.cpp">
-      <Filter>Shading templates</Filter>
-    </ClCompile>
     <ClCompile Include="..\xrRender\Blender_Particle.cpp">
       <Filter>Shading templates</Filter>
     </ClCompile>
     <ClCompile Include="blender_ssao.cpp">
       <Filter>Shading templates</Filter>
     </ClCompile>
+    <ClCompile Include="blender_depth.cpp">
+      <Filter>Shading templates</Filter>
+    </ClCompile>          
+    <ClCompile Include="blender_ibl.cpp">
+      <Filter>Shading templates</Filter>
+    </ClCompile>      
+    <ClCompile Include="blender_bloom.cpp">
+      <Filter>Shading templates</Filter>
+    </ClCompile>    
     <ClCompile Include="dx11HDAOCSBlender.cpp">
       <Filter>Shading templates</Filter>
     </ClCompile>
@@ -1079,16 +1085,10 @@
     <ClCompile Include="r4_rendertarget_phase_accumulator.cpp">
       <Filter>Core_Target</Filter>
     </ClCompile>
-    <ClCompile Include="r4_rendertarget_phase_bloom.cpp">
-      <Filter>Core_Target</Filter>
-    </ClCompile>
     <ClCompile Include="r4_rendertarget_phase_combine.cpp">
       <Filter>Core_Target</Filter>
     </ClCompile>
     <ClCompile Include="r4_rendertarget_phase_hdao.cpp">
-      <Filter>Core_Target</Filter>
-    </ClCompile>
-    <ClCompile Include="r4_rendertarget_phase_luminance.cpp">
       <Filter>Core_Target</Filter>
     </ClCompile>
     <ClCompile Include="r4_rendertarget_phase_occq.cpp">
@@ -1112,6 +1112,15 @@
     <ClCompile Include="r4_rendertarget_phase_ssao.cpp">
       <Filter>Core_Target</Filter>
     </ClCompile>
+    <ClCompile Include="r4_rendertarget_phase_depth.cpp">
+      <Filter>Core_Target</Filter>
+    </ClCompile> 
+    <ClCompile Include="r4_rendertarget_phase_ibl.cpp">
+      <Filter>Core_Target</Filter>
+    </ClCompile>        
+    <ClCompile Include="r4_rendertarget_phase_bloom.cpp">
+      <Filter>Core_Target</Filter>
+    </ClCompile>    
     <ClCompile Include="..\xrRender\ColorMapManager.cpp">
       <Filter>Core_Target\ColorMap</Filter>
     </ClCompile>
